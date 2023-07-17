@@ -1,5 +1,6 @@
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { PrismaClient } from "@prisma/client";
+import { compare } from "bcryptjs";
 import { AuthOptions } from "next-auth";
 import { Adapter } from "next-auth/adapters";
 import { OAuthUserConfig } from "next-auth/providers";
@@ -8,7 +9,15 @@ import GithubProvider, { GithubProfile } from 'next-auth/providers/github';
 import GoogleProvider, { GoogleProfile } from 'next-auth/providers/google';
 
 const prisma = new PrismaClient();
+
+type Cred = {
+    email: string,
+    password: string;
+}
 export const authOptions: AuthOptions = {
+    session: {
+        strategy: "jwt",
+    },
     adapter: PrismaAdapter(prisma) as Adapter,
     providers: [
         GithubProvider({
@@ -32,10 +41,47 @@ export const authOptions: AuthOptions = {
                     type: "password"
                 },
             },
-            async authorize() {
-                const user = { id: "1", name: "Admin", email: "admin@admin.com" };
+            async authorize(credentials, req) {
+                const { email, password }: Cred = credentials as Cred;
+                if (!email || !password) {
+                    return null;
+                }
+
+                const user = await prisma.user.findUnique({
+                    where: {
+                        email: email
+                    }
+                })
+
+                if (!user || !(await compare(password, user?.password || ''))) {
+                    return null;
+                }
+
                 return user;
             },
         })
-    ]
+    ],
+    callbacks: {
+        session: ({ session, token }) => {
+            console.log('SESSION {session, token}', { session, token })
+            return {
+                ...session,
+                user: {
+                    ...session.user,
+                    id: token.id,
+                }
+            }
+        },
+        jwt: ({ token, user }) => {
+            console.log('JWT {token, user}', { token, user });
+            if (user) {
+                return {
+                    ...token,
+                    id: user.id,
+
+                }
+            }
+            return token;
+        }
+    }
 }
