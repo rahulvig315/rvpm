@@ -17,6 +17,12 @@ export type FormInputsType = {
     passwordConfirm: string;
 }
 
+export enum Notifications {
+    Error = 'An Error Occurred',
+    NoMatch = 'Passwords do not match!',
+    Success = 'Authorization Success!'
+}
+
 export const nextCredentialsSignIn = async ({ email, password }: FormInputsType, callbackUrl: string) => {
     return await signIn('credentials', {
         redirect: true,
