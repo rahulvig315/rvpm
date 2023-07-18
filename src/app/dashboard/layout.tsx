@@ -1,16 +1,24 @@
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
+import { LogoutButton } from "../components/buttons/buttons";
 import { authOptions } from "../lib/auth";
 
-type Props = {}
+type Props = {
+    children: React.ReactNode
+}
 
-async function DashboardLayout({ }: Props) {
+async function DashboardLayout({ children }: Props) {
     const session = await getServerSession(authOptions);
     if (!session) {
         redirect('/')
     }
     return (
-        <div>DashboardLayout</div>
+        <main>
+            <LogoutButton />
+            <section>
+                {children}
+            </section>
+        </main>
     )
 }
 
