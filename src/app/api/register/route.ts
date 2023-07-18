@@ -2,6 +2,7 @@ import { prisma } from "@/app/lib/prisma";
 import { hash } from "bcryptjs";
 import { NextResponse } from "next/server";
 
+
 export async function POST(req: Request) {
     try {
         const { email, password } = (await req.json()) as {
@@ -22,11 +23,11 @@ export async function POST(req: Request) {
                 email: user.email,
             },
         });
-    } catch (error: any) {
+    } catch (error) {
         return new NextResponse(
             JSON.stringify({
                 status: "error",
-                message: error.message,
+                message: (error as { message: string })?.message,
             }),
             { status: 500 }
         );
