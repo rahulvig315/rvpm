@@ -17,17 +17,18 @@ export type FormInputsType = {
     passwordConfirm: string;
 }
 
-export enum Notifications {
+export enum AuthNotificationMessages {
     Error = 'An Error Occurred',
     NoMatch = 'Passwords do not match!',
-    Success = 'Authorization Success!'
+    RegisterSuccess = 'Registered Successfully!',
+    LoginSuccess = 'Logged In Successfully',
+    InvalidCredentials = 'Unauthorized. Either Invalid Email or Password Entered!',
 }
 
-export const nextCredentialsSignIn = async ({ email, password }: FormInputsType, callbackUrl: string) => {
-    return await signIn('credentials', {
-        redirect: true,
+export const nextCredentialsSignIn = async ({ email, password }: FormInputsType) => {
+    return await (await signIn('credentials', {
+        redirect: false,
         email: email,
-        password: password,
-        callbackUrl
-    })
+        password: password
+    }));
 }
