@@ -1,11 +1,13 @@
 'use client';
+import { NotificationTypes, REQUEST_HEADERS, RequestMethods } from '@/app/constants';
 import { useNotification } from '@/app/hooks/notification';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { NextResponse } from 'next/server';
 import { ChangeEvent, useState } from "react";
-import { FormInputsType, Notifications, Routes, Views, nextCredentialsSignIn } from "../../utils/landing";
+import { AuthNotificationMessages, FormInputsType, Routes, Views, nextCredentialsSignIn } from "../../utils/landing";
 import UserAuthForm from '../forms/UserAuthForm';
 import LandingNavigation from '../navigation/LandingNavigation';
+
 
 
 function Landing() {
@@ -18,49 +20,38 @@ function Landing() {
         passwordConfirm: ''
     })
     const [loading, setLoading] = useState<boolean>(false);
-    const [error, setError] = useState<unknown>(null);
-
-    const callbackUrl = useSearchParams().get('callbackUrl') || Routes.Dashboard;
 
 
     const handleFormSubmit = async (event: React.FormEvent) => {
         event.preventDefault()
         setLoading(true);
-        let res: NextResponse;
-        try {
-            switch (view) {
-                case Views.Register:
-                    if (formInputs.password === formInputs.passwordConfirm) {
-                        res = await fetch(Routes.Registration, {
-                            method: 'POST',
-                            body: JSON.stringify(formInputs),
-                            headers: {
-                                "Content-Type": "application/json"
-                            }
-                        }) as NextResponse
-                        setLoading(false);
-                        if (res.ok) {
-                            addNotification(Notifications.Success)
-                            await nextCredentialsSignIn(formInputs, callbackUrl)
-                        } else {
-                            setError((await res.json()).message)
+        switch (view) {
+            case Views.Register:
+                if (formInputs.password === formInputs.passwordConfirm) {
+                    const res: NextResponse = await fetch(Routes.Registration, {
+                        method: RequestMethods.POST,
+                        body: JSON.stringify(formInputs),
+                        headers: {
+                            ...REQUEST_HEADERS.CONTENT_TYPE
                         }
-                        return;
+                    }) as NextResponse
+                    if (res.ok) {
+                        const registeredUser = await nextCredentialsSignIn
+                            (formInputs);
+                        const notificationArgs = !registeredUser?.error ? [AuthNotificationMessages.RegisterSuccess, NotificationTypes.SUCCESS] : [AuthNotificationMessages.Error, NotificationTypes.ERROR]
+                        addNotification(...notificationArgs)
                     }
-                    addNotification(Notifications.NoMatch, 'error')
-                    setError({ message: Notifications.NoMatch })
                     break;
-                case Views.Login:
-                    addNotification(Notifications.Success)
-                    await nextCredentialsSignIn(formInputs, callbackUrl)
-                    setLoading(false);
-                    break;
-            }
-        } catch (error) {
-            addNotification(Notifications.Error, 'error')
-            setLoading(false)
-            setError(error)
+                }
+                addNotification(AuthNotificationMessages.NoMatch, NotificationTypes.ERROR)
+                break;
+            case Views.Login:
+                const loggedInUser = await nextCredentialsSignIn(formInputs);
+                const notificationArgs = !loggedInUser?.error ? [AuthNotificationMessages.LoginSuccess, NotificationTypes.SUCCESS] : [AuthNotificationMessages.InvalidCredentials, NotificationTypes.ERROR]
+                addNotification(...notificationArgs)
+                break;
         }
+        setLoading(false);
     }
     const handleFormInputChange = (event: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
@@ -75,11 +66,6 @@ function Landing() {
             return Views.Login
         }
     })
-
-    if (error) {
-        router.push(Routes.Landing)
-        return <></>
-    }
 
     return (
         <main className="h-screen w-screen flex flex-col bg-slate-100 overflow-y-auto">
