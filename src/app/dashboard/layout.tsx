@@ -1,6 +1,7 @@
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
-import { LogoutButton } from "../components/buttons/buttons";
+import Navigation from "../components/navigation/Navigation";
+import Sidebar from "../components/sidebar/Sidebar";
 import { authOptions } from "../lib/auth";
 
 type Props = {
@@ -13,11 +14,14 @@ async function DashboardLayout({ children }: Props) {
         redirect('/')
     }
     return (
-        <main>
-            <LogoutButton />
-            <section>
-                {children}
-            </section>
+        <main className="h-screen w-screen flex flex-col">
+            <Navigation />
+            <div className="grid grid-cols-2 grid-rows-1 w-full h-full">
+                <Sidebar />
+                <section className="">
+                    {children}
+                </section>
+            </div>
         </main>
     )
 }
