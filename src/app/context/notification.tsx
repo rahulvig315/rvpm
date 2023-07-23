@@ -1,9 +1,20 @@
 'use client';
-/* eslint-disable react/jsx-no-undef */
-import { createContext, useReducer } from 'react';
+import { Context, Dispatch, createContext, useReducer } from 'react';
 import { Notification, NotificationProps } from '../components/notification/Notification';
 
-export const NotificationContext = createContext({});
+
+type NotificationDispatch = Dispatch<{ type?: string, notification?: Partial<NotificationProps>, id?: string }>
+
+
+export type NotificationContextType = Context<{
+    dispatch: NotificationDispatch,
+    notifications: NotificationProps[]
+}>
+
+export const NotificationContext: NotificationContextType = createContext({
+    dispatch: {} as NotificationDispatch,
+    notifications: [] as NotificationProps[]
+});
 
 export const NotificationProvider = (
     {
@@ -24,7 +35,7 @@ export const NotificationProvider = (
     }, []);
 
     return (
-        <NotificationContext.Provider value={dispatch}>
+        <NotificationContext.Provider value={{ dispatch: dispatch as NotificationDispatch, notifications: state as NotificationProps[] }}>
             {children}
             {state.map((notification, notificationIdx) => (
                 <Notification key={notificationIdx} dispatch={dispatch} {...notification} />

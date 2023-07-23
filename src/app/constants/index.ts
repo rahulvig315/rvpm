@@ -13,6 +13,12 @@ export enum NotificationTypes {
     ERROR = 'error',
 }
 
+export enum Routes {
+    Dashboard = '/dashboard',
+    Landing = '/',
+    Registration = '/api/register'
+}
+
 export const NotificationBackgroundClasses = {
     info: 'bg-blue-500',
     success: 'bg-green-500',

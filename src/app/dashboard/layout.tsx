@@ -2,6 +2,7 @@ import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import Navigation from "../components/navigation/DashboardNavigation";
 import Sidebar from "../components/sidebar/Sidebar";
+import { Routes } from "../constants";
 import { authOptions } from "../lib/auth";
 
 type Props = {
@@ -11,7 +12,7 @@ type Props = {
 async function DashboardLayout({ children }: Props) {
     const session = await getServerSession(authOptions);
     if (!session) {
-        redirect('/')
+        redirect(Routes.Landing)
     }
     return (
         <main className="h-screen w-screen flex flex-col">
