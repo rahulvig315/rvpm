@@ -6,11 +6,18 @@ const APP_CONSTANTS = {
 
 export const { APP_NAME, APP_SHORTNAME, APP_DESCRIPTION } = APP_CONSTANTS;
 
-export const NOTIFICATION_TYPES = {
-    INFO: 'info',
-    SUCCESS: 'success',
-    WARN: 'warn',
-    ERROR: 'error',
+export enum NotificationTypes {
+    INFO = 'info',
+    SUCCESS = 'success',
+    WARN = 'warn',
+    ERROR = 'error',
+}
+
+export const NotificationBackgroundClasses = {
+    info: 'bg-blue-500',
+    success: 'bg-green-500',
+    warn: 'bg-yellow-500',
+    error: 'bg-red-500',
 }
 
 export const REQUEST_HEADERS = {
