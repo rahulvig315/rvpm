@@ -1,6 +1,6 @@
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
-import Navigation from "../components/navigation/Navigation";
+import Navigation from "../components/navigation/DashboardNavigation";
 import Sidebar from "../components/sidebar/Sidebar";
 import { authOptions } from "../lib/auth";
 
@@ -18,7 +18,7 @@ async function DashboardLayout({ children }: Props) {
             <Navigation />
             <div className="grid grid-cols-2 grid-rows-1 w-full h-full">
                 <Sidebar />
-                <section className="">
+                <section>
                     {children}
                 </section>
             </div>
