@@ -17,7 +17,7 @@ function UserAuthForm({
     handleChange
 }: UserAuthFormProps) {
     return (
-        <form onSubmit={handleSubmit} className=' p-10 h-fit flex flex-col justify-center bg-slate-200  rounded-2xl shadow-md border m-5 flex-1 drop-shadow-2xl'>
+        <form onSubmit={handleSubmit} className=' p-10 h-fit flex flex-col justify-center bg-slate-200  rounded-2xl shadow-md border m-5 flex-1 drop-shadow-2xl text-black'>
             <h1 className='font-extralight text-center mb-5 text-2xl border-b border-slate-500 p-2'>
                 {view.toUpperCase()}
             </h1>
