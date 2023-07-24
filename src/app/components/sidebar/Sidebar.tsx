@@ -7,7 +7,7 @@ type Props = {
 
 async function Sidebar() {
     const session = await getServerSession()
-    console.log('session', session)
+
     return (
         <>
             <aside className="hidden md:visible w-fit md:flex flex-col justify-start items-start shadow-2xl drop-shadow-2xl rounded-r-xl shadow-blue-800/50 bg-blue-900 text-white my-auto h-full min-w-[200px]">
