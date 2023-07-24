@@ -58,14 +58,13 @@ function Landing() {
         setFormInputs((prevFormInputs) =>
             ({ ...prevFormInputs, [name]: value }));
     };
-
     const handleViewChange = () => setView((prevView) => {
         if (prevView === Views.Login) {
             return Views.Register
         } else {
             return Views.Login
         }
-    })
+    });
 
     return (
         <main className="h-screen w-screen flex flex-col bg-slate-100 overflow-y-auto">

@@ -1,6 +1,6 @@
 const APP_CONSTANTS = {
     APP_NAME: 'RV Project Manager',
-    APP_SHORTNAME: 'RVPM',
+    APP_SHORTNAME: 'RvPM',
     APP_DESCRIPTION: 'Simple Kanban CRUD Project Manager'
 }
 
@@ -20,10 +20,10 @@ export enum Routes {
 }
 
 export const NotificationBackgroundClasses = {
-    info: 'bg-blue-500',
-    success: 'bg-green-500',
-    warn: 'bg-yellow-500',
-    error: 'bg-red-500',
+    info: 'bg-info',
+    success: 'bg-success',
+    warn: 'bg-warn',
+    error: 'bg-error',
 }
 
 export const REQUEST_HEADERS = {
