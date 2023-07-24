@@ -25,3 +25,19 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+/* Custom Components Styling */
+
+@layer components {
+  .nav {
+    @apply flex items-center justify-between w-full text-black shadow-2xl drop-shadow-2xl shadow-zinc-500 bg-neutral-200 rounded-br-2xl;
+
+  }
+  .nav .title {
+    @apply font-semibold text-xl h-fit px-2 py-2.5 align-middle  border-r-2 first-letter:text-blue-800 first-letter:text-2xl first-letter:italic rounded-br-xl border-transparent shadow-inner drop-shadow-2xl;
+  }
+  
+  .button {
+    @apply flex items-center h-full text-sm font-semibold p-3.5;
+  }
+}
