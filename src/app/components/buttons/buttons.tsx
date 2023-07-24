@@ -1,11 +1,12 @@
 'use client'
 
 import { signOut } from "next-auth/react";
-import { AnchorHTMLAttributes, ButtonHTMLAttributes, forwardRef } from "react";
+import Link from "next/link";
+import { ButtonHTMLAttributes, forwardRef } from "react";
 
 export const LogoutButton = () => {
     return (
-        <Button onClick={() => signOut()} className="h-full p-3.5 text-sm font-semibold text-white rounded-br-lg bg-zinc-800">
+        <Button onClick={() => signOut()} className="text-white bg-blue-900 button">
             Logout
         </Button>
     );
@@ -13,21 +14,19 @@ export const LogoutButton = () => {
 
 export const SettingsButton = () => {
     return (
-        <Button href='/dashboard/settings' className="h-full p-3.5 text-sm font-semibold text-white bg-zinc-700">
-            Settings
+        <Button className='button'>
+            <Link href='/dashboard/settings'>
+                Settings
+            </Link>
         </Button>
     );
 };
 
 
 // Export to storybook.
-export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & AnchorHTMLAttributes<HTMLAnchorElement>
+export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement>;
 
 export const Button = (forwardRef<HTMLButtonElement, ButtonProps>(({ children, ...props }, ref) => {
-
-    if (props?.href) {
-        return <a href={props?.href} {...props}>{children}</a>
-    }
 
     return (
         <button ref={ref} type="button" {...props}>
