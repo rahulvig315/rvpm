@@ -15,11 +15,11 @@ async function DashboardLayout({ children }: Props) {
         redirect(Routes.Landing)
     }
     return (
-        <main className="h-screen w-screen flex flex-col bg-slate-300 text-black">
+        <main className="flex flex-col w-screen h-screen text-black pb-[1rem] overflow-hidden bg-slate-300">
             <Navigation />
-            <div className="flex w-full h-full">
+            <div className="flex w-full h-screen">
                 <Sidebar />
-                <section className="m-7 rounded-xl bg-neutral-100 shadow-2xl drop-shadow-2xl flex w-full justify-center items-center">
+                <section className="flex items-center justify-center w-full h-screen shadow-2xl m-7 rounded-xl bg-neutral-100 drop-shadow-2xl max-h-[85vh]">
                     {children}
                 </section>
             </div>

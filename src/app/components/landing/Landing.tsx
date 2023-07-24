@@ -27,7 +27,6 @@ function Landing() {
             redirect(Routes.Dashboard)
         }
     }, [status, loading, notifications.length])
-
     const handleFormSubmit = async (event: React.FormEvent) => {
         event.preventDefault()
         setLoading(true);
@@ -67,13 +66,14 @@ function Landing() {
     });
 
     return (
-        <main className="h-screen w-screen flex flex-col bg-slate-100 overflow-y-auto">
+        <main className="flex flex-col w-screen h-screen overflow-y-auto bg-slate-100">
             <LandingNavigation onViewChange={handleViewChange} view={view} />
-            <div className='flex flex-col md:flex-row justify-start h-full items-center gap-5'>
-                <div className='bg-slate-800 h-full flex flex-col items-center text-zinc-100  p-10 justify-center gap-7 t flex-1 max-w-[600px] shadow-2xl drop-shadow-2xl'>
-                    <h1 className='text-2xl text-center font-bold'>Welcome to {APP_NAME}.</h1>
+            <div className='flex flex-col items-center justify-start h-full gap-5 md:flex-row'>
+                <div className='w-fit flex flex-col justify-center items-center shadow-2xl drop-shadow-2xl rounded-r-xl shadow-blue-800/50 bg-blue-900 text-white my-auto h-full
+                min-w-[200px] max-w-[500px]'>
+                    <h1 className='text-2xl font-thin text-center'>Welcome to {APP_NAME}.</h1>
                     <div className='p-5 text-center'>
-                        <p className='font-light text-lg'>
+                        <p className='text-lg font-extralight'>
                             I developed this app to free myself of third-party Project Managers tools .
                             <br />
                             Feel free to clone my git repo to free yourself as well!
@@ -82,7 +82,7 @@ function Landing() {
                         </p>
                     </div>
                 </div>
-                <div className="justify-center p-10 flex w-full flex-1">
+                <div className="flex justify-center flex-1 w-full p-10">
                     <UserAuthForm
                         view={view}
                         formInputs={formInputs}
