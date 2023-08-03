@@ -15,7 +15,7 @@ async function main() {
             name: "Admin",
         },
     } as any);
-    console.log({ user });
+
 }
 main()
     .then(() => prisma.$disconnect())

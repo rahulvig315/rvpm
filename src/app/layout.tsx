@@ -1,13 +1,15 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import { NextAuthProvider } from './providers';
+import { APP_DESCRIPTION, APP_NAME } from './constants';
+import { NotificationProvider } from './context/Notification';
 import './globals.css';
+import { NextAuthProvider } from './providers';
 
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'RV Project Manager',
-  description: 'Simple Kanban CRUD Project Manager',
+  title: APP_NAME,
+  description: APP_DESCRIPTION,
 }
 
 export default function RootLayout({
@@ -19,7 +21,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <NextAuthProvider>
-          {children}
+          <NotificationProvider>
+            {children}
+          </NotificationProvider>
         </NextAuthProvider>
       </body>
     </html>

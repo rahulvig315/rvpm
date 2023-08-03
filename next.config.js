@@ -1,9 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    experimental: {
-        appDir: true,
-        serverComponentsExternalPackages: ["@prisma/client", "bcryptjs"]
-    },
+    reactStrictMode: true
 }
 
 module.exports = nextConfig
