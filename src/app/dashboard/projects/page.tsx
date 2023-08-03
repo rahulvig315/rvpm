@@ -5,8 +5,10 @@ const gridItems = [
   1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24
 ]
 
-export const ProjectProps
-function Projects({ projects = gridItems }: Props) {
+export type ProjectProps = {
+  projects: number[]
+} 
+function Projects({ projects = gridItems }: ProjectProps) {
   return (
     <div className="flex flex-col justify-center h-full max-h-full min-w-full overflow-hidden">
       <header className="fixed top-0 w-full p-4 text-center shadow-2xl bg-blue-900/90 h-fit drop-shadow-2xl rounded-t-xl">
